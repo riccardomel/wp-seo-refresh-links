@@ -1,0 +1,21 @@
+Note: Require Wordpress > 5.0
+
+Easily set new publish date for your posts! Useful for seo or marketings speed ups!
+Scan every 6h default. (you can customize it)
+
+#For User
+1. Install it on your Wordpress Site!
+2. Edit or add post, open the new sidebar inside Gutemberg Editor
+3. Activate the re-publish and set the future date
+4. Enjoy!
+
+#For Devs
+1. Clone the repo
+2. sudo npm install --save-dev  --unsafe-perm  or  sudo npm install --save
+3. Build and watch code:
+3.1 sudo npm run dev
+3.2 sudo npm run build  --> Produzione
+4. Enjoy
+
+#Created by Riccardo Mel
+--> Check riccardomel.com
