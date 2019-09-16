@@ -1,0 +1,1 @@
+wp-seo-refresh-links
