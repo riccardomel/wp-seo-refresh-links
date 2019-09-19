@@ -4,7 +4,7 @@ Note: Require Wordpress > 5.0 (or minor versions using Gutemberg Plugin).
 
 Easily schedule new publish date for your posts! Useful for seo or marketings speed ups!
 Plan to revive your old wordpress posts!
-Scan every 6h default. (you can customize it)
+Scan every 30min default. (you can customize it)
 
 ## Installation User
 
