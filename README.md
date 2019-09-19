@@ -24,12 +24,21 @@ or:
 ```npm
 sudo npm install --save
 ```
-
 3. Build and watch code:
-3.1 sudo npm run dev
-3.2 sudo npm run build  --> Produzione
-4. Enjoy
+```npm
+sudo npm run dev
+```
+4. Production Mode:
+```npm
+sudo npm run build
+```
+5. Uploads in your wp-contents/plugin folder.
 
+6. Activate it
+
+7. Open Gutemberg 
+
+![img](https://riccardomel.com/github/screenshots/wp-seo-refresh-link.png)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
