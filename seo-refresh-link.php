@@ -5,7 +5,7 @@
  * Description: Seo Refresh Link
  * Author: Riccardo Mel
  * Author URI: https://riccardomel.com
- * Version: 1.0.1
+ * Version: 1.0.2
  * License: GPL2+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *
@@ -61,6 +61,16 @@ function seorefreshlink_cron_schedules($schedules){
             'display' => __('Once every 30 minutes'));
 	}
 	//Defaults
+	if(!isset($schedules["1h"])){
+        $schedules["1h"] = array(
+            'interval' => 3600,
+            'display' => __('Every 1 hours'));
+	}
+	if(!isset($schedules["4h"])){
+        $schedules["4h"] = array(
+            'interval' => 14400,
+            'display' => __('Every 4 hours'));
+	}
 	if(!isset($schedules["6h"])){
         $schedules["6h"] = array(
             'interval' => 21600,
@@ -87,13 +97,14 @@ add_action('seorefresh_event', 'seorefreshlink_function');
 
 function seorefresh_activation() {
     $first_time = time(); // you probably want this to be shortly after midnight
-    $recurrence = '6h';
+    $recurrence = '1h';
     wp_schedule_event($first_time, $recurrence, 'seorefresh_event');
 }
 
 function seorefreshlink_function() {
 
-	$today = date( 'Y-m-d' );
+	date_default_timezone_set('Europe/Rome');
+	$today = date( 'Y-m-d H:i:s' );
 	$args = array(
 		'meta_key' => '_seorefresh_link_field_checker',
 		'meta_value' => 'Si',
@@ -117,16 +128,23 @@ function seorefreshlink_function() {
 	   $postid= get_the_ID();
 	   $meta = get_post_meta( $postid ); 
 	   $meta_date = $meta['_seorefresh_link_field'][0]; 
-   
+
 	   if($meta['_seorefresh_link_field_checker'][0] == "Si"):
-		   wp_update_post(
-			   array (
-				   'ID'            => $postid, // ID of the post to update
-				   'post_date'     => $meta_date
-			   )
-		   );
-		   //Azzero status una volta eseguito
-		   update_post_meta( $postid, '_seorefresh_link_field_checker', 'No' );
+
+			if(new DateTime($meta_date) > new DateTime($today) ){
+				//echo "Data e ora salvata maggiore di oggi";
+			}else{
+				//echo "Data e ora salvata minore o uguale di oggi";
+				wp_update_post(
+					array (
+						'ID'            => $postid, // ID of the post to update
+						'post_date'     => $meta_date
+					)
+				);
+				//Azzero status una volta eseguito
+				 update_post_meta( $postid, '_seorefresh_link_field_checker', 'No' );
+			}
+		  
 	   endif;//meta_value
 
  	 endwhile;
