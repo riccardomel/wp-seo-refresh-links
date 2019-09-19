@@ -60,12 +60,6 @@ function seorefreshlink_cron_schedules($schedules){
             'interval' => 30*60,
             'display' => __('Once every 30 minutes'));
 	}
-	//Defaults
-	if(!isset($schedules["1h"])){
-        $schedules["1h"] = array(
-            'interval' => 3600,
-            'display' => __('Every 1 hours'));
-	}
 	if(!isset($schedules["4h"])){
         $schedules["4h"] = array(
             'interval' => 14400,
@@ -97,7 +91,7 @@ add_action('seorefresh_event', 'seorefreshlink_function');
 
 function seorefresh_activation() {
     $first_time = time(); // you probably want this to be shortly after midnight
-    $recurrence = '1h';
+    $recurrence = '30min';
     wp_schedule_event($first_time, $recurrence, 'seorefresh_event');
 }
 
