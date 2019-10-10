@@ -5,7 +5,7 @@
  * Description: Seo Refresh Link
  * Author: Riccardo Mel
  * Author URI: https://riccardomel.com
- * Version: 1.0.2
+ * Version: 1.0.3
  * License: GPL2+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *
@@ -25,21 +25,23 @@ function hello_gutenberg_scripts() {
 	$blockPath = '/dist/block.js';
 	$stylePath = '/dist/block.css';
 
-	// Enqueue the bundled block JS file
-	wp_enqueue_script(
-		'seorefreshlink-gutenberg-block-js',
-		plugins_url( $blockPath, __FILE__ ),
-		[ 'wp-i18n', 'wp-blocks', 'wp-edit-post', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-plugins', 'wp-edit-post', 'wp-api' ],
-		filemtime( plugin_dir_path(__FILE__) . $blockPath )
-	);
+	if ( is_admin() ) {
+		// Enqueue the bundled block JS file
+		wp_enqueue_script(
+			'seorefreshlink-gutenberg-block-js',
+			plugins_url( $blockPath, __FILE__ ),
+			[ 'wp-i18n', 'wp-blocks', 'wp-edit-post', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-plugins', 'wp-edit-post', 'wp-api' ],
+			filemtime( plugin_dir_path(__FILE__) . $blockPath )
+		);
 
-	// Enqueue frontend and editor block styles
-	wp_enqueue_style(
-		'seorefreshlink-gutenberg-block-css',
-		plugins_url( $stylePath, __FILE__ ),
-		'',
-		filemtime( plugin_dir_path(__FILE__) . $stylePath )
-	);
+		// Enqueue frontend and editor block styles
+		wp_enqueue_style(
+			'seorefreshlink-gutenberg-block-css',
+			plugins_url( $stylePath, __FILE__ ),
+			'',
+			filemtime( plugin_dir_path(__FILE__) . $stylePath )
+		);
+	}
 
 }
 
