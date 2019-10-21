@@ -134,7 +134,8 @@ function seorefreshlink_function() {
 				wp_update_post(
 					array (
 						'ID'            => $postid, // ID of the post to update
-						'post_date'     => $meta_date
+						'post_date'     => $meta_date,
+						'post_date_gmt'  => get_gmt_from_date($meta_date), 
 					)
 				);
 				//Azzero status una volta eseguito
@@ -155,3 +156,21 @@ register_deactivation_hook(__FILE__, 'my_deactivation');
 function my_deactivation() {
 	wp_clear_scheduled_hook('your_daily_event');
 }*/
+
+
+//Ovveride <pubDate> = Created Date - inside FEED RSS
+add_filter( 'get_post_time',          'wpseo_refresh_link_feed_time_override', 10, 3 ); 
+add_filter( 'get_post_modified_time', 'wpseo_refresh_link_feed_time_override', 10, 3 ); 
+function wpseo_refresh_link_feed_time_override( $time, $d, $gmt )
+{
+    global $post;
+
+    //If feed ovverride created date with new one
+    if(  is_feed() ):
+        $time = $post->post_modified;
+    endif;
+
+    //else - return time
+    return $time;
+}
+//END Ovveride <pubDate> = Created Date - inside FEED RSS
