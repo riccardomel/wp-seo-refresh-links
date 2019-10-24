@@ -167,7 +167,7 @@ function wpseo_refresh_link_feed_time_override( $time, $d, $gmt )
 
     //If feed ovverride created date with new one
     if(  is_feed() ):
-        $time = $post->post_modified;
+        $time = $post->post_date;
     endif;
 
     //else - return time
