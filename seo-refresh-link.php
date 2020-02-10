@@ -99,6 +99,11 @@ function seorefresh_activation() {
 
 function seorefreshlink_function() {
 
+	//Set user id as not bot
+	//Fix permission with iframe or content inside post.
+	wp_set_current_user(1); 
+
+	//Seo Refresh
 	date_default_timezone_set('Europe/Rome');
 	$today = date( 'Y-m-d H:i:s' );
 	$args = array(
@@ -130,6 +135,11 @@ function seorefreshlink_function() {
 			if(new DateTime($meta_date) > new DateTime($today) ){
 				//echo "Data e ora salvata maggiore di oggi";
 			}else{
+
+				global $allowedposttags;
+				$allowedposttags['div'] = array('align' => array (), 'class' => array (), 'id' => array (), 'dir' => array (), 'lang' => array(), 'style' => array (), 'xml:lang' => array() );
+				$allowedposttags['iframe'] = array('src' => array () );
+
 				//echo "Data e ora salvata minore o uguale di oggi";
 				wp_update_post(
 					array (
