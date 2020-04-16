@@ -33,7 +33,6 @@ function hello_gutenberg_scripts() {
 			[ 'wp-i18n', 'wp-blocks', 'wp-edit-post', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-plugins', 'wp-edit-post', 'wp-api' ],
 			filemtime( plugin_dir_path(__FILE__) . $blockPath )
 		);
-
 		// Enqueue frontend and editor block styles
 		wp_enqueue_style(
 			'seorefreshlink-gutenberg-block-css',
@@ -42,15 +41,14 @@ function hello_gutenberg_scripts() {
 			filemtime( plugin_dir_path(__FILE__) . $stylePath )
 		);
 	}
-
 }
-
 // Hook scripts function into block editor hook
 add_action( 'enqueue_block_assets', 'hello_gutenberg_scripts' );
 
 
-
-//CRON SETTING
+/**
+ * Cron Settings for scheduling the articles
+ */
 function seorefreshlink_cron_schedules($schedules){
     if(!isset($schedules["5min"])){
         $schedules["5min"] = array(
@@ -87,8 +85,11 @@ function seorefreshlink_cron_schedules($schedules){
 add_filter('cron_schedules','seorefreshlink_cron_schedules');
 
 
-//CRON FUNCTIONS
+/**
+ * Cron Functions
+ */
 register_activation_hook(__FILE__, 'seorefresh_activation');
+
 add_action('seorefresh_event', 'seorefreshlink_function');
 
 function seorefresh_activation() {
@@ -167,10 +168,11 @@ function my_deactivation() {
 	wp_clear_scheduled_hook('your_daily_event');
 }*/
 
-
 //Ovveride <pubDate> = Created Date - inside FEED RSS
 add_filter( 'get_post_time',          'wpseo_refresh_link_feed_time_override', 10, 3 ); 
+
 add_filter( 'get_post_modified_time', 'wpseo_refresh_link_feed_time_override', 10, 3 ); 
+
 function wpseo_refresh_link_feed_time_override( $time, $d, $gmt )
 {
     global $post;

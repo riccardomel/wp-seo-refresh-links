@@ -1,4 +1,5 @@
 # wp-seo-refresh-links
+Version: 1.0.3
 
 Note: Require Wordpress > 5.0 (or minor versions using Gutemberg Plugin).
 
@@ -10,28 +11,27 @@ Scan every 30min default. (you can customize it)
 
 1. Install it on your Wordpress Site!
 2. Edit or add post, open the new sidebar inside Gutemberg Editor
-3. Activate the re-publish and set the future date
+3. Activate the re-publish (Yes,No) and set the future date
 4. Enjoy!
 
 ## Installation Devs
 
-1. Clone the repo
+1. Clone the repo and install:
 
 ```npm
-sudo npm install --save-dev  --unsafe-perm  
-```
-or:
-```npm
-sudo npm install --save
+npm install  
 ```
 3. Build and watch code:
+
 ```npm
-sudo npm run dev
+npm run dev
 ```
+
 4. Production Mode:
 ```npm
-sudo npm run build
+npm run build
 ```
+
 5. Uploads in your wp-contents/plugin folder.
 
 6. Activate it
@@ -42,6 +42,12 @@ sudo npm run build
 
 ## How-to tutorial (it)
 https://www.targetweb.it/plugin-wordpress-per-programmare-la-ripubblicazione/
+
+## Changelog
+1.0.0 - Release  
+1.0.1 - Fix Scheduler on FeedRss  
+1.0.2 - Fix Iframe and embed inside post after re-publish  
+1.0.3 - Fix 403 error when save with some other plugin (such as Amp for Wp)  
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

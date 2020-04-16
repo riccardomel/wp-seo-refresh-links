@@ -54,6 +54,7 @@ class Seorefresh_Link extends Component {
 			fields: fields,
 		}
 		
+		console.log("Wp Seo Refresh Links init OK");
 		
 		//Fetch Iniziale
 		wp.apiFetch( { path: `/wp/v2/posts/${this.props.postId}`, method: 'GET' } ).then(
@@ -82,26 +83,24 @@ class Seorefresh_Link extends Component {
 				return err;
 			}
 		);// Fetch iniziale
-	
 
 	}//constructor
 
-
-
+	//Save Action
 	static getDerivedStateFromProps( nextProps, state ) {
 		//Ref: https://blog.logrocket.com/the-new-react-lifecycle-methods-in-plain-approachable-language-61a2105859f3/
 		
 
 		//Se si sta pubblicando / salvando
 		if ( ( nextProps.isPublishing || nextProps.isSaving ) && !nextProps.isAutoSaving ) {
-			console.log(state.fields)
-			console.log("Saving/Rendering   "+JSON.stringify(state));
+			//console.log(state.fields)
+			//console.log("Saving/Rendering   "+JSON.stringify(state));
 			
 			for (let index = 0; index < state.fields.length; index++) {
 				
 				wp.apiRequest( { path: `/seorefreshlink-gutenberg/v1/update-meta?id=${nextProps.postId}`, method: 'POST', data: state.fields[index] } ).then(
 					( data ) => {
-						console.log(data);
+						//console.log(data);
 						return data;
 					},
 					( err ) => {
@@ -114,8 +113,7 @@ class Seorefresh_Link extends Component {
 		}//Se si sta pubblicando / salvando
 	}//getDerivedStateFromProps
 
-
-
+	//OnChange - Date
 	onDateChange(newvalue) {
 
 		var stateCopy = Object.assign({}, this.state);
@@ -125,14 +123,15 @@ class Seorefresh_Link extends Component {
 		//this.state.fields[0].value = newvalue;
 		
 	}
+
+	//OnChange - Checker
 	onCheckerChange(newchecker) {
 		var stateCopy = Object.assign({}, this.state);
 		stateCopy.fields[1].value = newchecker;
 		this.setState(stateCopy);
 	}
 	
-
-
+	//Render
 	render() {
 		
 		//hard bind
@@ -183,8 +182,7 @@ class Seorefresh_Link extends Component {
 			</Fragment>
 		)
 	}
-}
-
+}// End Render
 
 //Costruttore
 const HOC = withSelect( ( select, { forceIsSaving } ) => {
@@ -202,7 +200,7 @@ const HOC = withSelect( ( select, { forceIsSaving } ) => {
 	};
 } )( Seorefresh_Link );
 
-//Register
+//Register Gutemberg Plugin
 registerPlugin( 'seorefresh-link', {
 	icon: 'controls-repeat',
 	render: HOC,

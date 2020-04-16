@@ -1,35 +1,8 @@
 <?php
-/*
-// Load Sidebar Functions in the old way
-//Display Metabox without sidebar
-function hello_gutenberg_add_meta_box() {
-	add_meta_box( 
-		'hello_gutenberg_meta_box', 
-		__( 'Hello Gutenberg Meta Box', 'seorefreshlink-gutenberg' ), 
-		'hello_gutenberg_metabox_callback',
-		null,
-		'side',
-		'low',
-		'post',
-		array(
-			'__back_compat_meta_box' => false,
-		)
-	);
-}
-add_action( 'add_meta_boxes', 'hello_gutenberg_add_meta_box' );
-
-function hello_gutenberg_metabox_callback( $post ) {
-	$value = get_post_meta( $post->ID, '_seorefresh_link_field', true );
-	?>
-	<label for="seorefresh_link_field"><?php _e( 'What\'s your name?', 'seorefreshlink-gutenberg' ) ?></label>
-	<input type="text" name="seorefresh_link_field" id="seorefresh_link_field" value="<?php echo $value ?>" />
-	<?php
-}
-*/
-
 /**
- * Save Hello Gutenberg Metabox
+ * Save Post Data Old Style Fallbacks
  */
+
 function seorefreshlink_save_postdata( $post_id ) {
 	if ( array_key_exists( 'seorefresh_link_field', $_POST ) ) {
 		update_post_meta( $post_id, '_seorefresh_link_field', $_POST['seorefresh_link_field'] );
@@ -38,10 +11,10 @@ function seorefreshlink_save_postdata( $post_id ) {
 		update_post_meta( $post_id, '_seorefresh_link_field_checker', $_POST['seorefresh_link_field_checker'] );
 	}
 }
-add_action( 'save_post', 'seorefreshlink_save_postdata' );
+add_action( 'save_post', 'seorefreshlink_save_postdata', 5);
 
 /**
- * Register Hello Gutenberg Meta Field to Rest API
+ * Register  Meta Field to Rest API
  */
 function seorefreshlink_register_meta() {
 	register_meta(
@@ -49,6 +22,11 @@ function seorefreshlink_register_meta() {
 			'type'			=> 'string',
 			'single'		=> true,
 			'show_in_rest'	=> true,
+			'public' => true,
+			'rest_base' => 'custom',
+			'auth_callback' => function () {
+				return current_user_can('edit_posts');
+			  }
 		)
 	);
 	register_meta(
@@ -56,14 +34,18 @@ function seorefreshlink_register_meta() {
 			'type'			=> 'string',
 			'single'		=> true,
 			'show_in_rest'	=> true,
+			'public' => true,
+			'rest_base' => 'custom',
+			'auth_callback' => function () {
+				return current_user_can('edit_posts');
+			  }
 		)
 	);
 }
 add_action( 'init', 'seorefreshlink_register_meta' );
 
-
 /**
- * Register Hello Gutenberg Metabox to Rest API
+ * Register Custom Save Route API
  */
 function seorefreshlink_api_posts_meta_field() {
 	register_rest_route(
@@ -78,11 +60,11 @@ function seorefreshlink_api_posts_meta_field() {
 		)
 	);
 }
-add_action( 'rest_api_init', 'seorefreshlink_api_posts_meta_field' );
+add_action( 'rest_api_init', 'seorefreshlink_api_posts_meta_field',15 );
 
 /**
- * Hello Gutenberg REST API Callback for Gutenberg
+ * Callback for save the post Meta
  */
 function seorefreshlink_update_callback( $data ) {
-	return update_post_meta( $data['id'], $data['key'], $data['value'] );
+	return	update_post_meta( $data['id'], $data['key'], $data['value'] );
 }
