@@ -186,3 +186,16 @@ function wpseo_refresh_link_feed_time_override( $time, $d, $gmt )
     return $time;
 }
 //END Ovveride <pubDate> = Created Date - inside FEED RSS
+
+
+
+
+
+// this function initializes the iframe elements
+function not_strip_iframe($initArray) {
+    $initArray['extended_valid_elements'] = "iframe[id|class|title|style|align|frameborder|height|longdesc|marginheight|marginwidth|name|scrolling|src|width|sandbox]";
+    return $initArray;
+}
+
+// this function alters the way the WordPress editor filters your code
+add_filter('tiny_mce_before_init', 'add_iframe');
