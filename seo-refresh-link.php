@@ -198,4 +198,31 @@ function not_strip_iframe($initArray) {
 }
 
 // this function alters the way the WordPress editor filters your code
-add_filter('tiny_mce_before_init', 'add_iframe');
+add_filter('tiny_mce_before_init', 'not_strip_iframe');
+
+/**
+ * Add iFrame to allowed wp_kses_post tags
+ *
+ * @param string $tags Allowed tags, attributes, and/or entities.
+ * @param string $context Context to judge allowed tags by. Allowed values are 'post',
+ *
+ * @return mixed
+ */
+add_filter( 'wp_kses_allowed_html', 'allow_iframe_in_editor', 10, 2 );
+function allow_iframe_in_editor( $tags, $context ) {
+    if( 'post' === $context ) {
+        $tags['iframe'] = array(
+            'allowfullscreen' => TRUE,
+            'frameborder' => TRUE,
+            'marginwidth'=> TRUE,
+            'marginheight'=> TRUE,
+            'sandbox' => TRUE,
+            'scrolling' => TRUE,
+            'height' => TRUE,
+            'src' => TRUE,
+            'style' => TRUE,
+            'width' => TRUE,
+        );
+    }
+    return $tags;
+}
