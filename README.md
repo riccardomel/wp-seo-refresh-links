@@ -35,7 +35,7 @@ npm run dev
 npm run build
 ```
 
-5. Uploads in your wp-contents/plugin folder.
+5. Uploads (without node_modules folder) in your wp-contents/plugin/wp-seo-refresh-links folder.
 
 6. Activate it
 
