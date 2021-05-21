@@ -47,7 +47,8 @@ https://www.targetweb.it/plugin-wordpress-per-programmare-la-ripubblicazione/
 1.0.0 - Release  
 1.0.1 - Fix Scheduler on FeedRss  
 1.0.2 - Fix Iframe and embed inside post after re-publish  
-1.0.3 - Fix 403 error when save with some other plugin (such as Amp for Wp)  
+1.0.3 - Fix 403 error when save with some other plugin (such as Amp for Wp) 
+1.0.4 - Fix critical error (month) formatting in new version of Gutemberg 
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

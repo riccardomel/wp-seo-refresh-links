@@ -148,6 +148,12 @@ class Seorefresh_Link extends Component {
 					.split( '' ).reverse().join( '' ) // Reverse the string and test for "a" not followed by a slash
 			);//Essential per DataTimePicker
 
+
+			//Debug for errors
+			console.log(moment(_this.state.fields[0].value, "YYYY-MM-DD hh:mm").format('DD-MM-YYYY hh:mm'));
+			console.log(_this.state.fields[0].value);
+			console.log(_this.state.fields[1].value);
+
 		
 		//Return
 		return (
@@ -169,9 +175,9 @@ class Seorefresh_Link extends Component {
 							
 						/>
 
-
+						
 						<DateTimePicker
-							currentDate={ this.state.fields[0].value }
+							currentDate={ moment(_this.state.fields[0].value, "YYYY-MM-DD hh:mm").isValid() && moment(_this.state.fields[0].value, "YYYY-MM-DD hh:mm").format('YYYY-MM-DD HH:mm') }
 							onChange={ ( value ) => { this.onDateChange(value) }}
 							is12Hour={ is12HourTime }
 						/>
