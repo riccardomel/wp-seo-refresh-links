@@ -54,7 +54,7 @@ class Seorefresh_Link extends Component {
 			fields: fields,
 		}
 		
-		console.log("Wp Seo Refresh Links init OK");
+		console.log("Wp Seo Refresh Links init OK - v1.0.5");
 		
 		//Fetch Iniziale
 		wp.apiFetch( { path: `/wp/v2/posts/${this.props.postId}`, method: 'GET' } ).then(
@@ -71,6 +71,8 @@ class Seorefresh_Link extends Component {
 						value: data.meta._seorefresh_link_field_checker,
 					}
 				  ];
+
+				console.log("fields_updated: ", fields_updated);
 
 				//Aggiorna
 				this.setState( { 
@@ -126,6 +128,7 @@ class Seorefresh_Link extends Component {
 
 	//OnChange - Checker
 	onCheckerChange(newchecker) {
+		console.log("onCheckerChange: ", newchecker);
 		var stateCopy = Object.assign({}, this.state);
 		stateCopy.fields[1].value = newchecker;
 		this.setState(stateCopy);
@@ -150,11 +153,10 @@ class Seorefresh_Link extends Component {
 
 
 			//Debug for errors
-			console.log(moment(_this.state.fields[0].value, "YYYY-MM-DD hh:mm").format('DD-MM-YYYY hh:mm'));
-			console.log(_this.state.fields[0].value);
-			console.log(_this.state.fields[1].value);
+			console.log("DATA moment", moment(_this.state.fields[0].value, "YYYY-MM-DD hh:mm").format('DD-MM-YYYY hh:mm'));
+			console.log("DATA RAW", _this.state.fields[0].value);
+			console.log("ATTIVARE TRIGGER", _this.state.fields[1].value);
 
-		
 		//Return
 		return (
 			<Fragment>
